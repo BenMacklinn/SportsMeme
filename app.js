@@ -117,6 +117,22 @@ function formatClock(isoString) {
   });
 }
 
+function getClusterSourceEntries(cluster) {
+  const entries = [];
+  const seenSources = new Set();
+
+  for (const article of [cluster.lead, ...cluster.related]) {
+    if (seenSources.has(article.source)) {
+      continue;
+    }
+
+    seenSources.add(article.source);
+    entries.push(article);
+  }
+
+  return entries;
+}
+
 function renderFilters() {
   elements.filters.innerHTML = getSportOrder()
     .map(
@@ -194,13 +210,12 @@ function renderLeadStory(cluster) {
     return;
   }
 
-  const relatedLinks = cluster.related
-    .slice(0, 4)
+  const sourceLinks = getClusterSourceEntries(cluster)
     .map(
-      (article) => `
+      (article, index) => `
         <li>
           <a href="${article.url}" target="_blank" rel="noreferrer">
-            <strong>${article.source}</strong>
+            <strong>${article.source}${index === 0 ? " | Lead" : ""}</strong>
             <span>${article.title}</span>
           </a>
         </li>
@@ -219,7 +234,7 @@ function renderLeadStory(cluster) {
         <span class="meta-pill">Momentum ${cluster.momentum}</span>
         <span class="meta-pill">${formatRelativeTime(cluster.lead.minutesAgo)}</span>
       </div>
-      <ul class="lead-links">${relatedLinks || "<li><span>No secondary coverage yet.</span></li>"}</ul>
+      <ul class="lead-links">${sourceLinks || "<li><span>No source coverage available yet.</span></li>"}</ul>
     </article>
   `;
 }
@@ -238,7 +253,19 @@ function renderClusterList(clusters) {
 
   elements.clusterList.innerHTML = remaining
     .map(
-      (cluster, index) => `
+      (cluster, index) => {
+        const sourceLinks = getClusterSourceEntries(cluster)
+          .map(
+            (article, sourceIndex) => `
+              <li>
+                <a href="${article.url}" target="_blank" rel="noreferrer">${article.source}${sourceIndex === 0 ? " | Lead" : ""}</a>
+                <span>${article.title}</span>
+              </li>
+            `,
+          )
+          .join("");
+
+        return `
         <article class="cluster-card">
           <div>
             <p class="cluster-kicker">${cluster.sport} | Rank ${index + 2}</p>
@@ -251,20 +278,10 @@ function renderClusterList(clusters) {
             <span class="meta-label">Momentum ${cluster.momentum}</span>
             <span class="meta-label">${formatRelativeTime(cluster.lead.minutesAgo)}</span>
           </div>
-          <ul class="cluster-links">
-            ${cluster.related
-              .map(
-                (article) => `
-                  <li>
-                    <a href="${article.url}" target="_blank" rel="noreferrer">${article.source}</a>
-                    <span>${article.title}</span>
-                  </li>
-                `,
-              )
-              .join("")}
-          </ul>
+          <ul class="cluster-links">${sourceLinks}</ul>
         </article>
-      `,
+      `;
+      },
     )
     .join("");
 }

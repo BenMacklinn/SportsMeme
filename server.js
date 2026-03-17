@@ -245,10 +245,11 @@ const server = http.createServer(async (request, response) => {
     });
   }
 });
-
-server.listen(PORT, HOST, () => {
-  console.log(`SportsMeme running at http://${HOST}:${PORT}`);
-});
+if (require.main === module) {
+  server.listen(PORT, HOST, () => {
+    console.log(`SportsMeme running at http://${HOST}:${PORT}`);
+  });
+}
 
 async function handleStoriesRequest(requestUrl, response) {
   const forceRefresh = requestUrl.searchParams.get("refresh") === "1";
@@ -941,3 +942,7 @@ function respondText(response, statusCode, body) {
   });
   response.end(body);
 }
+
+module.exports = {
+  getStoriesPayload,
+};

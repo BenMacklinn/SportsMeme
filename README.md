@@ -25,6 +25,14 @@ npm start
 
 Then open `http://127.0.0.1:4173`.
 
+## Deploy On Vercel
+
+- Static files are served from the project root
+- Live data is handled by [api/stories.mjs](/Users/benmock/Downloads/SportsMeme/api/stories.mjs)
+- [vercel.json](/Users/benmock/Downloads/SportsMeme/vercel.json) raises the function duration cap so feed fetches have enough headroom
+
+You do not run `server.js` on Vercel. Vercel will serve the frontend files directly and mount `/api/stories` as a Node function.
+
 ## Notes
 
 - The backend caches feed results for 5 minutes to avoid hammering publishers.
