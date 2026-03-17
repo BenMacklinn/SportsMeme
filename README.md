@@ -1,35 +1,32 @@
 # SportsMeme
 
-Static prototype of a Techmeme-style sports news aggregator.
+Live Techmeme-style sports news prototype.
 
-## What it includes
+## What it does
 
-- A front page that clusters related sports coverage into one lead story with additional source links
-- A river view that shows every story in reverse chronological order
-- Browser-side ranking based on recency, source depth, source authority, and a simple buzz signal
-- League filters for quickly narrowing the board
+- Fetches live sports RSS feeds from ESPN, CBS Sports, and The Guardian
+- Normalizes stories into one format on the server
+- Clusters related coverage into a front page
+- Renders a reverse-chronological river view
+- Exposes feed health so partial outages are visible instead of silent
 
 ## Files
 
+- `server.js`: static server, RSS fetcher, normalization, clustering, ranking
 - `index.html`: app shell
-- `styles.css`: newspaper-inspired sports layout
-- `app.js`: seed article data, clustering, ranking, and rendering
+- `styles.css`: presentation
+- `app.js`: frontend state and rendering
 
 ## Run it
 
-Open `index.html` directly in a browser, or serve the folder with a static file server:
-
 ```bash
-python3 -m http.server 4173
+npm start
 ```
 
-Then visit `http://localhost:4173`.
+Then open `http://127.0.0.1:4173`.
 
-## Next step to make it real
+## Notes
 
-Replace the hard-coded `articles` array in `app.js` with:
-
-1. RSS/API ingestion from a curated sports source list
-2. Normalized article extraction
-3. Event clustering using title embeddings or entity-based matching
-4. Persistent ranking inputs such as source reliability, engagement, and freshness decay
+- The backend caches feed results for 5 minutes to avoid hammering publishers.
+- Clustering is heuristic, based on title token overlap and source diversity.
+- If one or more feeds fail, the UI surfaces that instead of pretending the data is complete.

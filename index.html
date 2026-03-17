@@ -10,10 +10,10 @@
     <div class="page-shell">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Sports News Aggregator Prototype</p>
+          <p class="eyebrow">Live Sports News Aggregator</p>
           <h1>SportsMeme</h1>
           <p class="dek">
-            Clustered sports coverage ranked by recency, source depth, and buzz.
+            Real RSS-fed sports coverage clustered by event, source depth, and freshness.
           </p>
         </div>
         <div class="topbar-meta">
@@ -22,7 +22,7 @@
             <strong id="updated-at">Now</strong>
           </div>
           <button id="reshuffle-button" class="primary-button" type="button">
-            Refresh Signals
+            Refresh Feeds
           </button>
         </div>
       </header>
@@ -70,6 +70,8 @@
         <div class="filters" id="filters"></div>
       </nav>
 
+      <section id="alert-banner" class="alert-banner" hidden></section>
+
       <main class="layout">
         <section id="frontpage-view" class="main-column view-panel active">
           <div id="lead-story"></div>
@@ -109,7 +111,7 @@
           <section class="sidebar-panel">
             <div class="panel-heading">
               <h2>Sources</h2>
-              <p>Initial feed mix you could wire into RSS ingestion.</p>
+              <p>Live feed health and article counts for the current refresh.</p>
             </div>
             <ul id="source-list" class="source-list"></ul>
           </section>
