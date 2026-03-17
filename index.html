@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportsMeme</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Sports News Aggregator Prototype</p>
+          <h1>SportsMeme</h1>
+          <p class="dek">
+            Clustered sports coverage ranked by recency, source depth, and buzz.
+          </p>
+        </div>
+        <div class="topbar-meta">
+          <div class="timestamp">
+            <span>Updated</span>
+            <strong id="updated-at">Now</strong>
+          </div>
+          <button id="reshuffle-button" class="primary-button" type="button">
+            Refresh Signals
+          </button>
+        </div>
+      </header>
+
+      <section class="scoreboard" aria-label="Dashboard summary">
+        <article>
+          <span class="scoreboard-label">Top clusters</span>
+          <strong id="cluster-count">0</strong>
+        </article>
+        <article>
+          <span class="scoreboard-label">Tracked sources</span>
+          <strong id="source-count">0</strong>
+        </article>
+        <article>
+          <span class="scoreboard-label">Stories in river</span>
+          <strong id="river-count">0</strong>
+        </article>
+        <article>
+          <span class="scoreboard-label">Live pulse</span>
+          <strong id="buzz-score">0</strong>
+        </article>
+      </section>
+
+      <nav class="control-strip" aria-label="Views and sport filters">
+        <div class="tablist" role="tablist" aria-label="News views">
+          <button
+            class="tab-button active"
+            data-view="frontpage"
+            role="tab"
+            aria-selected="true"
+            type="button"
+          >
+            Front Page
+          </button>
+          <button
+            class="tab-button"
+            data-view="river"
+            role="tab"
+            aria-selected="false"
+            type="button"
+          >
+            River
+          </button>
+        </div>
+        <div class="filters" id="filters"></div>
+      </nav>
+
+      <main class="layout">
+        <section id="frontpage-view" class="main-column view-panel active">
+          <div id="lead-story"></div>
+          <div id="cluster-list" class="cluster-list"></div>
+        </section>
+
+        <section id="river-view" class="main-column view-panel" hidden>
+          <div class="panel-heading">
+            <h2>River View</h2>
+            <p>Pure reverse chronology across every tracked source.</p>
+          </div>
+          <div id="river-list" class="river-list"></div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="sidebar-panel">
+            <div class="panel-heading">
+              <h2>Pulse</h2>
+              <p>Fast-scan metrics for the current board.</p>
+            </div>
+            <div id="pulse-list" class="pulse-list"></div>
+          </section>
+
+          <section class="sidebar-panel">
+            <div class="panel-heading">
+              <h2>How It Works</h2>
+              <p>Prototype logic modeled after Techmeme-style curation.</p>
+            </div>
+            <ol class="how-it-works">
+              <li>Ingest coverage from a curated set of sports publishers.</li>
+              <li>Cluster reports that describe the same sports event.</li>
+              <li>Rank each cluster by recency, source depth, and buzz.</li>
+              <li>Render a front page and a reverse-chronological river.</li>
+            </ol>
+          </section>
+
+          <section class="sidebar-panel">
+            <div class="panel-heading">
+              <h2>Sources</h2>
+              <p>Initial feed mix you could wire into RSS ingestion.</p>
+            </div>
+            <ul id="source-list" class="source-list"></ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
